@@ -16,9 +16,17 @@ export function HeroSection(
   const totalDownloadsAll = releases.length > 0 ? calculateTotalDownloadsFromAllReleases(releases) : 0;
   const latestReleaseDownloads = release ? calculateTotalDownloads(release.assets) : 0;
   const latestTag = release?.tag_name ?? 'Awaiting release';
-  const publishedDate = release ? new Date(release.published_at).toLocaleDateString() : 'Not published yet';
+  const publishedDate = release
+    ? new Date(release.published_at).toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      })
+    : 'Not published yet';
   const rateLimitRemaining = rateLimit ? `${rateLimit.remaining}/${rateLimit.limit}` : 'Unavailable';
-  const rateLimitReset = rateLimit?.reset ?? 'Unknown';
+  const rateLimitReset = rateLimit?.reset
+    ? new Date(rateLimit.reset).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+    : 'Unknown';
 
   section.innerHTML = `
     <div class="space-y-6">
@@ -81,6 +89,25 @@ export function HeroSection(
             `
           )
           .join('')}
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="rounded-md border border-slate-200 bg-white p-4 text-sm text-slate-600">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Latest tag</p>
+          <p class="mt-1 text-base font-semibold text-slate-900">${latestTag}</p>
+        </div>
+        <div class="rounded-md border border-slate-200 bg-white p-4 text-sm text-slate-600">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Published</p>
+          <p class="mt-1 text-base font-semibold text-slate-900">${publishedDate}</p>
+        </div>
+        <div class="rounded-md border border-slate-200 bg-white p-4 text-sm text-slate-600">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">GitHub rate limit</p>
+          <p class="mt-1 text-base font-semibold text-slate-900">${rateLimitRemaining}</p>
+        </div>
+        <div class="rounded-md border border-slate-200 bg-white p-4 text-sm text-slate-600">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Rate limit resets</p>
+          <p class="mt-1 text-base font-semibold text-slate-900">${rateLimitReset}</p>
+        </div>
       </div>
     </div>
   `;
