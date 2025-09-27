@@ -12,6 +12,20 @@
   body {
     @apply bg-slate-50 text-slate-900;
     font-feature-settings: 'rlig' 1, 'calt' 1;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    text-wrap: pretty;
+  }
+
+  :where(p, h1, h2, h3, h4, h5, h6, li, a, span, strong, em) {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  *,
+  *::before,
+  *::after {
+    min-width: 0;
   }
 
   *:focus-visible {
