@@ -6,29 +6,25 @@ import { ModuleInfoSection } from '../components/ModuleInfoSection';
 import { Footer } from '../components/Footer';
 
 export function renderApp(container: HTMLElement, props: PageProps) {
-  // Clear container
   container.innerHTML = '';
 
-  // Create main wrapper with fade-in animation
   const wrapper = document.createElement('div');
-  wrapper.className = 'opacity-0 transition-opacity duration-1000';
-  
-  // Render components
-  wrapper.appendChild(HeroSection(props.release, props.releases));
-  wrapper.appendChild(Notes());
-  
+  wrapper.className = 'space-y-12 text-slate-100';
+
+  wrapper.appendChild(HeroSection(props.release, props.releases, props.rateLimit));
+
+  const gridLayout = document.createElement('div');
+  gridLayout.className = 'grid gap-8 lg:grid-cols-[1.7fr_1fr]';
+
   if (props.release) {
-    wrapper.appendChild(ReleaseSection(props.release));
+    gridLayout.appendChild(ReleaseSection(props.release));
   }
-  
+
+  gridLayout.appendChild(Notes(props.rateLimit));
+  wrapper.appendChild(gridLayout);
+
   wrapper.appendChild(ModuleInfoSection());
   wrapper.appendChild(Footer(props.lastDeployed));
 
   container.appendChild(wrapper);
-
-  // Trigger fade-in animation
-  requestAnimationFrame(() => {
-    wrapper.classList.remove('opacity-0');
-    wrapper.classList.add('opacity-100');
-  });
 }

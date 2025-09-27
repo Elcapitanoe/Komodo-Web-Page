@@ -7,40 +7,50 @@
   <meta name="description" content="Spoof your Android device as Google Pixel 9 Pro XL with advanced system optimization using Komodo build prop module">
   <meta name="keywords" content="Pixel Build Prop, Komodo, Android, Google Pixel 9 Pro XL, device spoofing, build.prop, system optimization, Magisk module">
   <meta name="author" content="Pixel Build Prop Team">
-  
+
   <!-- Disable caching for HTML -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  
+
   <!-- Open Graph -->
   <meta property="og:title" content="Pixel Build Prop - Komodo Module">
   <meta property="og:description" content="Spoof your Android device as Google Pixel 9 Pro XL with advanced system optimization using Komodo build prop module">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Pixel Build Prop">
-  
+
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Pixel Build Prop - Komodo Module">
   <meta name="twitter:description" content="Spoof your Android device as Google Pixel 9 Pro XL with advanced system optimization using Komodo build prop module">
-  
+
   <!-- DNS Prefetch -->
   <link rel="dns-prefetch" href="//fonts.googleapis.com">
   <link rel="dns-prefetch" href="//fonts.gstatic.com">
   <link rel="dns-prefetch" href="//api.github.com">
-  
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"></noscript>
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="preload"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  >
+  <noscript>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    >
+  </noscript>
+
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  
+
   <!-- Theme -->
-  <meta name="theme-color" content="#3b82f6">
-  
+  <meta name="theme-color" content="#111827">
+
   <!-- Theme Script (must run before body to prevent flash) -->
   <script>
     (function() {
@@ -49,52 +59,83 @@
         if (stored) return stored;
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       };
-      
+
       const theme = getTheme();
       document.documentElement.classList.toggle('dark', theme === 'dark');
       document.documentElement.setAttribute('data-theme', theme);
     })();
   </script>
-  
+
   <!-- Styles -->
   <link rel="stylesheet" href="./styles/globals.css">
 </head>
 <body class="antialiased" data-theme="">
-  <div id="app" class="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
-    <main class="container mx-auto px-4 py-8 max-w-4xl">
+  <div id="app" class="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100 transition-colors dark:bg-slate-950">
+    <div class="pointer-events-none absolute inset-0 opacity-80">
+      <div class="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-gradient-to-br from-sky-500/40 via-cyan-400/20 to-transparent blur-3xl"></div>
+      <div class="absolute bottom-0 right-0 h-[28rem] w-[28rem] rounded-full bg-gradient-to-tl from-purple-600/30 via-fuchsia-500/10 to-transparent blur-3xl"></div>
+      <div class="absolute top-1/2 left-1/3 h-72 w-72 -translate-y-1/2 rounded-full bg-gradient-to-r from-emerald-500/20 via-teal-500/10 to-transparent blur-3xl"></div>
+    </div>
+
+    <main class="relative mx-auto flex min-h-screen max-w-6xl flex-col gap-12 px-6 py-16 sm:px-10 lg:px-16">
       <!-- Loading state -->
-      <div id="loading" class="text-center py-12">
-        <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-600 mx-auto mb-4"></div>
-        <p class="text-gray-600 dark:text-gray-400">Loading...</p>
+      <div id="loading" class="flex flex-1 flex-col items-center justify-center gap-4 text-center">
+        <div class="relative h-16 w-16">
+          <div class="absolute inset-0 rounded-full border border-slate-700"></div>
+          <div class="absolute inset-0 animate-spin rounded-full border-y-2 border-t-transparent border-b-cyan-400"></div>
+        </div>
+        <div class="space-y-1">
+          <p class="text-base font-medium tracking-wide text-slate-200">Preparing the console</p>
+          <p class="text-sm text-slate-400">Fetching the latest Komodo intel…</p>
+        </div>
       </div>
-      
+
       <!-- Content will be injected here -->
       <div id="content" class="hidden"></div>
-      
+
       <!-- Error state -->
-      <div id="error" class="hidden min-h-screen flex items-center justify-center">
-        <div class="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-8 text-center">
-          <div class="text-6xl mb-4">⚠️</div>
-          <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Service Unavailable</h1>
-          <p class="text-gray-600 dark:text-gray-400 mb-6" id="error-message"></p>
-          <button id="retry-btn" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
-            Try Again
+      <div id="error" class="hidden">
+        <div class="mx-auto w-full max-w-2xl rounded-3xl border border-white/10 bg-white/10 p-10 text-center backdrop-blur-xl shadow-[0_25px_70px_-20px_rgba(56,189,248,0.35)]">
+          <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-amber-500/20 text-3xl">⚠️</div>
+          <h1 class="mt-6 text-3xl font-semibold tracking-tight text-white">Signal Lost</h1>
+          <p class="mt-3 text-base text-slate-300" id="error-message"></p>
+          <button
+            id="retry-btn"
+            class="mt-6 inline-flex items-center justify-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-500/20 px-6 py-2 text-sm font-medium uppercase tracking-wider text-cyan-100 transition hover:bg-cyan-400/30"
+          >
+            Retry Sync
           </button>
         </div>
       </div>
     </main>
   </div>
-  
+
   <!-- Theme Toggle Button -->
-  <button id="theme-toggle" class="fixed bottom-6 right-6 p-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 z-50" aria-label="Toggle theme">
-    <svg id="sun-icon" class="w-5 h-5 text-gray-600 dark:text-gray-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <button
+    id="theme-toggle"
+    class="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/10 text-slate-100 shadow-[0_20px_45px_-15px_rgba(59,130,246,0.45)] backdrop-blur-xl transition hover:scale-105 hover:border-cyan-300/70 hover:text-white"
+    aria-label="Toggle theme"
+  >
+    <svg
+      id="sun-icon"
+      class="hidden h-6 w-6 text-slate-200 dark:block"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
     </svg>
-    <svg id="moon-icon" class="w-5 h-5 text-gray-600 dark:text-gray-400 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <svg
+      id="moon-icon"
+      class="block h-6 w-6 text-slate-200 dark:hidden"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
     </svg>
   </button>
-  
+
   <script type="module" src="./src/main.ts"></script>
 </body>
 </html>
