@@ -1,4 +1,3 @@
-import { initializeTheme } from './theme';
 import { renderApp } from './app';
 import type { PageProps } from '../lib/types';
 import {
@@ -6,9 +5,6 @@ import {
   fetchRateLimit,
   findLatestStableRelease,
 } from '../lib/github-api';
-
-// Initialize theme system
-initializeTheme();
 
 // Main application initialization
 async function main() {
