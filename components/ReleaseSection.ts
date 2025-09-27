@@ -36,8 +36,8 @@ export function ReleaseSection(release: Release): HTMLElement {
       <div class="flex flex-wrap items-start justify-between gap-6">
         <div class="space-y-3">
           <span class="inline-flex items-center gap-2 rounded-full border border-sky-400/50 bg-sky-500/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-sky-100">Latest drop</span>
-          <h2 class="text-3xl font-semibold text-white">${release.name}</h2>
-          <p class="text-sm text-slate-200/80">${release.body ? 'Fresh tweaks and fixes packaged in a Magisk-ready zip.' : 'No changelog supplied for this build.'}</p>
+          <h2 class="min-w-0 break-words text-balance text-3xl font-semibold text-white">${release.name}</h2>
+          <p class="min-w-0 break-words text-balance text-sm text-slate-200/80">${release.body ? 'Fresh tweaks and fixes packaged in a Magisk-ready zip.' : 'No changelog supplied for this build.'}</p>
         </div>
         <div class="grid gap-4 sm:grid-cols-3">
           <div class="rounded-2xl border border-white/10 bg-black/20 p-4 text-sm text-slate-200/80">

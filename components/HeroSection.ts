@@ -66,7 +66,7 @@ export function HeroSection(
           <div class="space-y-4">
             <div>
               <p class="text-3xl font-semibold text-white">${latestTag}</p>
-              <p class="text-sm text-slate-400">${release ? release.name : 'No packages published yet'}</p>
+              <p class="min-w-0 break-words text-balance text-sm text-slate-400">${release ? release.name : 'No packages published yet'}</p>
             </div>
             <div class="grid gap-3 text-sm text-slate-300">
               <div class="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
