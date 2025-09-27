@@ -1,7 +1,10 @@
 {
   "name": "pixel-prop",
-  "compatibility_date": "2025-08-05",
+  "compatibility_date": "2024-08-05",
   "assets": {
     "directory": "./out"
+  },
+  "build": {
+    "command": "npm run build"
   }
 }
