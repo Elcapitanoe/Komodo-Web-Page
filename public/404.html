@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Redirecting…</title>
+    <meta http-equiv="refresh" content="0;url=/{REPO_NAME}/" />
+    <script>
+      (function () {
+        var repoName = '{REPO_NAME}';
+        var basePath = repoName ? '/' + repoName.replace(/^\/+|\/+$/g, '') : '';
+        var path = window.location.pathname;
+        if (basePath && path.toLowerCase().startsWith(basePath.toLowerCase())) {
+          path = path.slice(basePath.length);
+        }
+        if (!path.startsWith('/')) {
+          path = '/' + path;
+        }
+        var redirect = basePath + '/#' + path;
+        if (window.location.search) {
+          redirect += window.location.search;
+        }
+        if (window.location.hash && !window.location.hash.startsWith('#/')) {
+          redirect += window.location.hash;
+        }
+        window.location.replace(redirect);
+      })();
+    </script>
+  </head>
+  <body>
+    <p>Redirecting to the single page app…</p>
+  </body>
+</html>

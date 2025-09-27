@@ -1,50 +1,25 @@
 import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+
+const repositoryName = '{REPO_NAME}';
 
 export default defineConfig({
-  root: '.',
+  plugins: [react()],
+  base: `/${repositoryName}/`,
   build: {
-    outDir: 'out',
+    outDir: '{BUILD_DIR}',
     emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: './index.html'
-      }
-    },
-    assetsDir: 'assets',
-    sourcemap: false,
-    minify: 'esbuild',
-    target: 'es2020',
-    cssCodeSplit: true,
-    chunkSizeWarningLimit: 1000,
   },
   server: {
-    port: 3000,
     open: true,
-    hmr: {
-      overlay: false,
-    },
+    port: 3000,
   },
-  esbuild: {
-    drop: ['console', 'debugger'],
-    legalComments: 'none',
-    minifyIdentifiers: true,
-    minifySyntax: true,
-    minifyWhitespace: true,
-  },
-  optimizeDeps: {
-    include: [],
-    exclude: [],
-  },
-  define: {
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
-    '__BUILD_TIME__': JSON.stringify(new Date().toLocaleString('en-US', {
-      timeZone: 'Asia/Jakarta',
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    }) + ' (UTC+7)'),
+  preview: {
+    port: 4173,
   },
 });
+
+/*
+ * When deploying to https://{GITHUB_USERNAME}.github.io or to a custom domain,
+ * change `base` above to '/' so that asset URLs resolve correctly.
+ */
