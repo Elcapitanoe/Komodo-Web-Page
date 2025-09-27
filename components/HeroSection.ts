@@ -37,12 +37,15 @@ export function HeroSection(
             <div class="flex flex-wrap items-center gap-4">
               <a
                 href="${release.assets[0]?.browser_download_url ?? '#'}"
-                class="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-cyan-400/80 via-sky-400/80 to-blue-500/80 px-6 py-3 text-base font-medium text-white shadow-[0_20px_45px_-20px_rgba(34,211,238,0.6)] transition hover:scale-[1.02] hover:shadow-[0_20px_60px_-20px_rgba(34,211,238,0.8)]"
+                class="inline-flex w-full max-w-full flex-wrap items-center gap-3 whitespace-normal rounded-full bg-gradient-to-r from-cyan-400/80 via-sky-400/80 to-blue-500/80 px-6 py-3 text-base font-medium text-white shadow-[0_20px_45px_-20px_rgba(34,211,238,0.6)] transition hover:scale-[1.02] hover:shadow-[0_20px_60px_-20px_rgba(34,211,238,0.8)] sm:w-auto"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span class="text-lg">⬇</span>
-                Download ${release.tag_name}
+                <span class="flex-shrink-0 text-lg">⬇</span>
+                <span class="flex min-w-0 flex-1 flex-wrap gap-1 text-left">
+                  <span class="flex-shrink-0">Download</span>
+                  <span class="min-w-0 break-all sm:truncate">${release.tag_name}</span>
+                </span>
               </a>
               <span class="rounded-full border border-white/20 px-4 py-2 text-sm text-slate-200/80">
                 Published ${new Date(release.published_at).toLocaleDateString()}
