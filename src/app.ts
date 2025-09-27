@@ -9,7 +9,7 @@ export function renderApp(container: HTMLElement, props: PageProps) {
   container.innerHTML = '';
 
   const wrapper = document.createElement('div');
-  wrapper.className = 'space-y-12 text-slate-100';
+  wrapper.className = 'space-y-10 text-slate-900';
 
   wrapper.appendChild(HeroSection(props.release, props.releases, props.rateLimit));
 

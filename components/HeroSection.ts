@@ -1,5 +1,9 @@
 import type { Release, RateLimit } from '../lib/types';
-import { formatDownloadCount, calculateTotalDownloadsFromAllReleases } from '../lib/utils';
+import {
+  formatDownloadCount,
+  calculateTotalDownloadsFromAllReleases,
+  calculateTotalDownloads,
+} from '../lib/utils';
 
 export function HeroSection(
   release: Release | null,
@@ -7,103 +11,92 @@ export function HeroSection(
   rateLimit?: RateLimit
 ): HTMLElement {
   const section = document.createElement('section');
-  section.className = 'relative overflow-hidden rounded-3xl border border-white/10 bg-white/10 p-10 shadow-[0_25px_70px_-20px_rgba(59,130,246,0.35)] backdrop-blur-xl';
+  section.className = 'rounded-lg border border-slate-200 bg-white p-6 shadow-sm sm:p-8';
 
   const totalDownloadsAll = releases.length > 0 ? calculateTotalDownloadsFromAllReleases(releases) : 0;
-  const rateLimitRemaining = rateLimit ? `${rateLimit.remaining}/${rateLimit.limit}` : '—';
+  const latestReleaseDownloads = release ? calculateTotalDownloads(release.assets) : 0;
+  const latestTag = release?.tag_name ?? 'Awaiting release';
+  const publishedDate = release ? new Date(release.published_at).toLocaleDateString() : 'Not published yet';
+  const rateLimitRemaining = rateLimit ? `${rateLimit.remaining}/${rateLimit.limit}` : 'Unavailable';
   const rateLimitReset = rateLimit?.reset ?? 'Unknown';
-  const latestTag = release?.tag_name ?? 'Awaiting Release';
 
   section.innerHTML = `
-    <div class="relative">
-      <div class="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full bg-cyan-400/10 blur-3xl"></div>
-      <div class="pointer-events-none absolute -bottom-12 left-12 h-48 w-48 rounded-full bg-purple-500/20 blur-3xl"></div>
-
-      <div class="grid gap-10 lg:grid-cols-[1.4fr_1fr]">
-        <div class="space-y-6">
-          <span class="inline-flex items-center gap-2 rounded-full border border-cyan-400/40 bg-cyan-500/20 px-4 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-100">
-            Komodo Build Prop
-          </span>
-
-          <h1 class="text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
-            Reimagine your device identity.
-          </h1>
-
-          <p class="max-w-2xl text-lg text-slate-200/90">
-            Komodo spoofs your Android build so Google services treat it like a Pixel 9 Pro XL. Unlock experiments, stay compatible, and keep control with a lightweight Magisk module engineered for tinkerers.
+    <div class="space-y-6">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div class="space-y-3">
+          <p class="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">Komodo Build Prop</p>
+          <h1 class="text-3xl font-semibold text-slate-900 sm:text-4xl">Spoof your Android device with a Pixel identity</h1>
+          <p class="text-sm text-slate-600 sm:max-w-xl">
+            A lightweight Magisk module that updates build properties so Google services recognise your device as a Pixel 9 Pro XL.
           </p>
-
-          ${release ? `
-            <div class="flex flex-wrap items-center gap-4">
+        </div>
+        ${
+          release
+            ? `
               <a
                 href="${release.assets[0]?.browser_download_url ?? '#'}"
-                class="inline-flex w-full max-w-full flex-wrap items-center gap-3 whitespace-normal rounded-full bg-gradient-to-r from-cyan-400/80 via-sky-400/80 to-blue-500/80 px-6 py-3 text-base font-medium text-white shadow-[0_20px_45px_-20px_rgba(34,211,238,0.6)] transition hover:scale-[1.02] hover:shadow-[0_20px_60px_-20px_rgba(34,211,238,0.8)] sm:w-auto"
+                class="inline-flex items-center justify-center gap-2 rounded-md border border-slate-300 bg-slate-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-slate-800"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <span class="flex-shrink-0 text-lg">⬇</span>
-                <span class="flex min-w-0 flex-1 flex-wrap gap-1 text-left">
-                  <span class="flex-shrink-0">Download</span>
-                  <span class="min-w-0 break-all sm:truncate">${release.tag_name}</span>
-                </span>
+                <span>Download</span>
+                <span class="font-mono text-xs">${release.tag_name}</span>
               </a>
-              <span class="rounded-full border border-white/20 px-4 py-2 text-sm text-slate-200/80">
-                Published ${new Date(release.published_at).toLocaleDateString()}
-              </span>
-            </div>
-          ` : `
-            <div class="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 text-sm text-slate-200/80">
-              We are preparing the first public drop. Stay tuned for the launch announcement.
-            </div>
-          `}
-        </div>
+            `
+            : `
+              <div class="rounded-md border border-dashed border-slate-300 px-4 py-2 text-sm text-slate-500">
+                First public release is on the way.
+              </div>
+            `
+        }
+      </div>
 
-        <div class="flex flex-col gap-6 rounded-3xl border border-white/10 bg-slate-950/60 p-6 shadow-inner">
-          <div class="flex items-center justify-between">
-            <span class="text-sm font-medium uppercase tracking-[0.2em] text-slate-400">Latest Build</span>
-            <span class="text-xs text-slate-500">status feed</span>
-          </div>
-          <div class="space-y-4">
-            <div>
-              <p class="text-3xl font-semibold text-white">${latestTag}</p>
-              <p class="min-w-0 break-words text-balance text-sm text-slate-400">${release ? release.name : 'No packages published yet'}</p>
-            </div>
-            <div class="grid gap-3 text-sm text-slate-300">
-              <div class="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
-                <span class="font-medium text-slate-200">Downloads</span>
-                <span class="font-semibold text-cyan-300">${totalDownloadsAll > 0 ? formatDownloadCount(totalDownloadsAll) : '0'}</span>
-              </div>
-              <div class="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
-                <span class="font-medium text-slate-200">Published Builds</span>
-                <span class="font-semibold text-cyan-300">${releases.length}</span>
-              </div>
-              <div class="flex items-center justify-between rounded-2xl border border-white/5 bg-white/5 px-4 py-3">
-                <span class="font-medium text-slate-200">API Window</span>
-                <span class="font-semibold text-cyan-300">${rateLimitRemaining}</span>
-              </div>
-            </div>
-            <p class="text-xs text-slate-500">Resets at <span class="font-medium text-slate-300">${rateLimitReset}</span></p>
-          </div>
+      <div class="grid gap-3 sm:grid-cols-3">
+        <div class="rounded-md border border-slate-200 bg-slate-50 p-4">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Total downloads</p>
+          <p class="mt-2 text-2xl font-semibold text-slate-900">${formatDownloadCount(totalDownloadsAll)}</p>
+        </div>
+        <div class="rounded-md border border-slate-200 bg-slate-50 p-4">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Latest release downloads</p>
+          <p class="mt-2 text-2xl font-semibold text-slate-900">${formatDownloadCount(latestReleaseDownloads)}</p>
+        </div>
+        <div class="rounded-md border border-slate-200 bg-slate-50 p-4">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Published builds</p>
+          <p class="mt-2 text-2xl font-semibold text-slate-900">${releases.length}</p>
         </div>
       </div>
 
-      <div class="mt-10 grid gap-4 rounded-3xl border border-white/10 bg-black/20 p-6 text-sm text-slate-300 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="space-y-2">
-          <p class="text-xs uppercase tracking-[0.28em] text-slate-500">Identity Mask</p>
-          <p class="text-base font-semibold text-white">Pixel 9 Pro XL profile</p>
+      <div class="grid gap-6 sm:grid-cols-2">
+        <div class="space-y-3">
+          <div>
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Latest build</p>
+            <p class="mt-1 text-lg font-semibold text-slate-900">${latestTag}</p>
+            <p class="text-sm text-slate-600">${release ? release.name : 'No package published yet'}</p>
+          </div>
+          <p class="text-xs text-slate-500">Published ${publishedDate}</p>
         </div>
-        <div class="space-y-2">
-          <p class="text-xs uppercase tracking-[0.28em] text-slate-500">Compatibility</p>
-          <p class="text-base font-semibold text-white">Magisk & Android 10+</p>
+        <div class="space-y-3">
+          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">GitHub API window</p>
+          <p class="text-sm text-slate-600">Requests left: <span class="font-semibold text-slate-900">${rateLimitRemaining}</span></p>
+          <p class="text-xs text-slate-500">Reset at ${rateLimitReset}</p>
         </div>
-        <div class="space-y-2">
-          <p class="text-xs uppercase tracking-[0.28em] text-slate-500">Update cadence</p>
-          <p class="text-base font-semibold text-white">Rapid when Pixel drops</p>
-        </div>
-        <div class="space-y-2">
-          <p class="text-xs uppercase tracking-[0.28em] text-slate-500">Safety</p>
-          <p class="text-base font-semibold text-white">Rollback-friendly zip</p>
-        </div>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        ${[
+          'Pixel 9 Pro XL profile',
+          'Magisk & Android 10+',
+          'Rollback friendly zip',
+          'Open source module',
+        ]
+          .map(
+            feature => `
+              <div class="rounded-md border border-slate-200 bg-white p-4 text-sm text-slate-600">
+                ${feature}
+              </div>
+            `
+          )
+          .join('')}
       </div>
     </div>
   `;
