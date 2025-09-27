@@ -29,10 +29,10 @@ export function ReleaseSection(release: Release): HTMLElement {
   const safeMarkdown = createSafeMarkdown(release.body);
 
   section.innerHTML = `
-    <div class="space-y-6">
-      <div class="space-y-2">
-        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">Latest release</p>
-        <h2 class="text-2xl font-semibold text-slate-900">${release.name}</h2>
+    <div class="space-y-6 whitespace-normal break-words leading-relaxed">
+      <div class="space-y-2 whitespace-normal break-words leading-relaxed">
+        <p class="text-xs font-semibold uppercase tracking-wide text-slate-500 whitespace-normal break-words leading-relaxed">Latest release</p>
+        <h2 class="text-2xl font-semibold text-slate-900 whitespace-normal break-words leading-relaxed">${release.name}</h2>
         <p class="text-sm text-slate-600 whitespace-normal break-words leading-relaxed">${release.body ? 'Overview of the newest Komodo package.' : 'No changelog supplied for this build.'}</p>
       </div>
 
