@@ -65,23 +65,7 @@ export function HeroSection(
           <p class="mt-2 text-2xl font-semibold text-slate-900">${releases.length}</p>
         </div>
       </div>
-
-      <div class="grid gap-6 sm:grid-cols-2">
-        <div class="space-y-3">
-          <div>
-            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Latest build</p>
-            <p class="mt-1 text-lg font-semibold text-slate-900">${latestTag}</p>
-            <p class="text-sm text-slate-600">${release ? release.name : 'No package published yet'}</p>
-          </div>
-          <p class="text-xs text-slate-500">Published ${publishedDate}</p>
-        </div>
-        <div class="space-y-3">
-          <p class="text-xs font-medium uppercase tracking-wide text-slate-500">GitHub API window</p>
-          <p class="text-sm text-slate-600">Requests left: <span class="font-semibold text-slate-900">${rateLimitRemaining}</span></p>
-          <p class="text-xs text-slate-500">Reset at ${rateLimitReset}</p>
-        </div>
-      </div>
-
+      
       <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         ${[
           'Pixel 9 Pro XL profile',
