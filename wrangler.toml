@@ -1,11 +1,10 @@
 name = "komodo-build-prop"
 compatibility_date = "2024-01-01"
-
-[assets]
-directory = "./dist"
+assets = { directory = "./dist" }
 
 [[routes]]
-pattern = "prop.domiadi.com"   
+pattern = "prop.domiadi.com"
+custom_domain = true
 
 [build]
 command = "npm run build"
