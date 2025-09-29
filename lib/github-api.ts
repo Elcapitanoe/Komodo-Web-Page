@@ -7,16 +7,34 @@ const REQUEST_TIMEOUT = 15000;
 const MAX_RETRIES = 2;
 
 function resolveGitHubToken(): string | undefined {
-  if (typeof process !== 'undefined' && typeof process.env !== 'undefined' && process.env.GH_TOKEN) {
-    return process.env.GH_TOKEN;
+  const envVarNames = ['GH_TOKEN', 'GITHUB_TOKEN'];
+  const viteEnvVarNames = ['GH_TOKEN', 'VITE_GH_TOKEN', 'GITHUB_TOKEN', 'VITE_GITHUB_TOKEN'];
+
+  if (typeof process !== 'undefined' && typeof process.env !== 'undefined') {
+    for (const name of envVarNames) {
+      const value = process.env[name];
+      if (value) {
+        return value;
+      }
+    }
   }
 
   try {
     const env = (import.meta as ImportMeta | undefined)?.env;
-    return env?.GH_TOKEN ?? env?.VITE_GH_TOKEN ?? undefined;
+    if (env) {
+      const envRecord = env as Record<string, string | undefined>;
+      for (const name of viteEnvVarNames) {
+        const value = envRecord[name];
+        if (value) {
+          return value;
+        }
+      }
+    }
   } catch {
-    return undefined;
+    // Ignore errors accessing import.meta in non-browser environments
   }
+
+  return undefined;
 }
 
 interface RequestOptions {
@@ -199,10 +217,13 @@ function extractRateLimit(response: Response, data?: any): RateLimit {
   const limit = parseInt(response.headers.get('X-RateLimit-Limit') || '0', 10);
   const remaining = parseInt(response.headers.get('X-RateLimit-Remaining') || '0', 10);
   const resetTimestamp = parseInt(response.headers.get('X-RateLimit-Reset') || '0', 10);
-  
-  const finalLimit = limit || data?.rate?.limit || 0;
-  const finalRemaining = remaining || data?.rate?.remaining || 0;
-  const finalReset = resetTimestamp || data?.rate?.reset || 0;
+
+  const coreResource = data?.resources?.core ?? {};
+  const rateData = data?.rate ?? {};
+
+  const finalLimit = limit || coreResource.limit || rateData.limit || 0;
+  const finalRemaining = remaining || coreResource.remaining || rateData.remaining || 0;
+  const finalReset = resetTimestamp || coreResource.reset || rateData.reset || 0;
   
   const resetDate = new Date(finalReset * 1000);
   const reset = resetDate.toLocaleString('en-US', {
