@@ -37,6 +37,7 @@ export default defineConfig({
   },
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    'process.env.GH_TOKEN': JSON.stringify(process.env.GH_TOKEN || ''),
     '__BUILD_TIME__': JSON.stringify(new Date().toLocaleString('en-US', {
       timeZone: 'Asia/Jakarta',
       year: 'numeric',
