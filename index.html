@@ -1,88 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pixel Build Prop - Komodo Module</title>
-  <meta name="description" content="Spoof your Android device as Google Pixel 9 Pro XL with advanced system optimization using Komodo build prop module">
-  <meta name="keywords" content="Pixel Build Prop, Komodo, Android, Google Pixel 9 Pro XL, device spoofing, build.prop, system optimization, Magisk module">
-  <meta name="author" content="Pixel Build Prop Team">
-
-  <!-- Disable caching for HTML -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Pixel Build Prop - Komodo Module">
-  <meta property="og:description" content="Spoof your Android device as Google Pixel 9 Pro XL with advanced system optimization using Komodo build prop module">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Pixel Build Prop">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Pixel Build Prop - Komodo Module">
-  <meta name="twitter:description" content="Spoof your Android device as Google Pixel 9 Pro XL with advanced system optimization using Komodo build prop module">
-
-  <!-- DNS Prefetch -->
-  <link rel="dns-prefetch" href="//fonts.googleapis.com">
-  <link rel="dns-prefetch" href="//fonts.gstatic.com">
-  <link rel="dns-prefetch" href="//api.github.com">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-    rel="preload"
-    as="style"
-    onload="this.onload=null;this.rel='stylesheet'"
-  >
-  <noscript>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    >
-  </noscript>
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-
-  <!-- Theme -->
-  <meta name="theme-color" content="#f8fafc">
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="./styles/globals.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Komodo Build Prop - Releases</title>
+<meta name="description" content="Direct download Komodo Build Prop Magisk module releases. Latest and previous builds with per-file download counts." />
+<meta name="robots" content="index,follow" />
+<meta name="theme-color" content="#2563eb" />
+<meta property="og:title" content="Komodo Build Prop - Releases" />
+<meta property="og:description" content="Direct download Komodo Build Prop Magisk module releases. Latest and previous builds with per-file download counts." />
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+<link rel="preconnect" href="https://api.github.com" />
+<link rel="stylesheet" href="./src/styles.css" />
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"SoftwareSourceCode",
+  "name":"Komodo Build Prop",
+  "description":"Magisk module that updates build properties so Google services recognize your device as a Pixel 9 Pro XL.",
+  "codeRepository":"https://github.com/Elcapitanoe/Komodo-Build-Prop",
+  "programmingLanguage":"Shell",
+  "creator":{"@type":"Person","name":"Elcapitanoe"}
+}
+</script>
 </head>
-<body class="bg-slate-50 font-sans text-slate-900">
-  <div id="app" class="min-h-screen">
-    <main class="mx-auto flex min-h-screen w-full max-w-5xl flex-col gap-10 px-5 py-12 sm:px-10">
-      <!-- Loading state -->
-      <div id="loading" class="flex flex-1 flex-col items-center justify-center gap-3 text-center text-sm text-slate-600">
-        <div class="h-10 w-10 animate-spin rounded-full border-2 border-slate-300 border-t-transparent"></div>
-        <p>Loading the latest Komodo release…</p>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1><a href="https://github.com/Elcapitanoe/Komodo-Build-Prop" target="_blank" rel="noopener noreferrer">Komodo Build Prop</a></h1>
+      <span>A Magisk module that updates your build properties so Google services recognize your device as a Pixel 9 Pro XL</span>
+      <br>
+      <hr class="dash">
+      <h2>Latest Release</h2>
+      <div id="latestBlock">
+        <div class="skeleton" style="width:60%"></div>
+        <div class="skeleton" style="width:40%;margin-top:6px"></div>
       </div>
 
-      <!-- Content will be injected here -->
-      <div id="content" class="hidden"></div>
+      <hr class="dash">
 
-      <!-- Error state -->
-      <div id="error" class="hidden">
-        <div class="mx-auto w-full max-w-2xl rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm">
-          <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-amber-100 text-2xl">⚠️</div>
-          <h1 class="mt-4 text-2xl font-semibold text-slate-900">Unable to load data</h1>
-          <p class="mt-2 text-sm text-slate-600" id="error-message"></p>
-          <button
-            id="retry-btn"
-            class="mt-5 inline-flex items-center justify-center rounded-md border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-          >
-            Try again
-          </button>
-        </div>
+      <h2>Previous Builds</h2>
+      <div id="previousBlock">
+        <div class="skeleton" style="width:70%"></div>
+        <div class="skeleton" style="width:55%;margin-top:6px"></div>
+        <div class="skeleton" style="width:45%;margin-top:6px"></div>
       </div>
-    </main>
-  </div>
+    </section>
+  </main>
 
-  <script type="module" src="./src/main.ts"></script>
+<script type="module" src="/src/script.js"></script>
 </body>
 </html>
