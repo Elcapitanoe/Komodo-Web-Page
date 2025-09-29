@@ -3,8 +3,21 @@ import type { Release, RateLimit, GitHubApiResponse, ApiError } from './types';
 const GITHUB_API_BASE = 'https://api.github.com';
 const REPO_OWNER = 'Elcapitanoe';
 const REPO_NAME = 'Komodo-Build-Prop';
-const REQUEST_TIMEOUT = 15000; 
-const MAX_RETRIES = 2; 
+const REQUEST_TIMEOUT = 15000;
+const MAX_RETRIES = 2;
+
+function resolveGitHubToken(): string | undefined {
+  if (typeof process !== 'undefined' && typeof process.env !== 'undefined' && process.env.GH_TOKEN) {
+    return process.env.GH_TOKEN;
+  }
+
+  try {
+    const env = (import.meta as ImportMeta | undefined)?.env;
+    return env?.GH_TOKEN ?? env?.VITE_GH_TOKEN ?? undefined;
+  } catch {
+    return undefined;
+  }
+}
 
 interface RequestOptions {
   readonly timeout?: number;
@@ -34,7 +47,7 @@ function createHeaders(etag?: string): HeadersInit {
     'X-GitHub-Api-Version': '2022-11-28',
   };
 
-  const token = process.env.GH_TOKEN;
+  const token = resolveGitHubToken();
   if (token) {
     headers.Authorization = `Bearer ${token}`;
   }
