@@ -4,6 +4,8 @@ declare const __BUILD_TIME__: string;
 interface ImportMetaEnv {
   readonly GH_TOKEN?: string;
   readonly VITE_GH_TOKEN?: string;
+  readonly GITHUB_TOKEN?: string;
+  readonly VITE_GITHUB_TOKEN?: string;
 }
 
 interface ImportMeta {
