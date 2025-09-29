@@ -1,0 +1,17 @@
+name = "komodo-build-prop"
+compatibility_date = "2024-01-01"
+
+[site]
+bucket = "./dist"
+
+[[routes]]
+pattern = "*"
+custom_domain = true
+
+[build]
+command = "npm run build"
+cwd = "."
+watch_dir = "src"
+
+[env.production.vars]
+NODE_ENV = "production"
